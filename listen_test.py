@@ -4,17 +4,17 @@ import time
 import Queue
 import threading
 import quietnet
+import options
 
 FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-CHUNK = 44
-
-FRAME_LENGTH = 8
-search_freq = 19043
+CHANNELS = options.channels
+RATE = options.rate
+search_freq = options.freq
+FRAME_LENGTH = options.frame_length
+CHUNK = options.chunk
+sigil = [int(x) for x in list(options.sigil)]
 
 samples_to_process = 4000
-sigil = ([0] * 3) + ([1] * 10) + ([0] * 3)
 
 def process_samples(samples, chunk, rate, frame_length):
     buffers = [quietnet.unpack(b) for b in samples]
@@ -48,7 +48,7 @@ p = pyaudio.PyAudio()
 stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=callback)
 stream.start_stream()
 
-print "Quietnet listen test started, listening at %sHz" % search_freq
+print "Quietnet listening at %sHz" % search_freq
 
 while True:
     time.sleep(1.5)

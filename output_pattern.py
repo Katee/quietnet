@@ -2,26 +2,25 @@ import sys
 import pyaudio
 from datetime import datetime, timedelta
 import quietnet
+import options
 
 FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
+CHANNELS = options.channels
+RATE = options.rate
+FREQ = options.freq
+FREQ_OFF = 0
+SIGIL = options.sigil
+FRAME_LENGTH = options.frame_length
+DATASIZE = options.datasize
 
 p = pyaudio.PyAudio()
 stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True)
 
-FREQ_OFF = 0
-FREQ = 19043
-FRAME_LENGTH = 8
-DATASIZE = 44 * FRAME_LENGTH
-
-SIGIL = "0001111111111000"
-
 buffers = {
     "000": quietnet.tone(FREQ_OFF, DATASIZE),
-    "100": quietnet.tone(FREQ_OFF, DATASIZE),
-    "001": quietnet.tone(FREQ_OFF, DATASIZE),
-    "101": quietnet.tone(FREQ_OFF, DATASIZE),
+    "100": quietnet.lenvelope(quietnet.tone(FREQ_OFF, DATASIZE)),
+    "001": quietnet.renvelope(quietnet.tone(FREQ_OFF, DATASIZE)),
+    "101": quietnet.envelope(quietnet.tone(FREQ_OFF, DATASIZE)),
     "010": quietnet.envelope(quietnet.tone(FREQ, DATASIZE)),
     "011": quietnet.lenvelope(quietnet.tone(FREQ, DATASIZE)),
     "110": quietnet.renvelope(quietnet.tone(FREQ, DATASIZE)),
