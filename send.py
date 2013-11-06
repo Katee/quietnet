@@ -1,15 +1,13 @@
-import sys
 import pyaudio
-from datetime import datetime, timedelta
 import quietnet
 import options
+import psk
 
 FORMAT = pyaudio.paInt16
 CHANNELS = options.channels
 RATE = options.rate
 FREQ = options.freq
 FREQ_OFF = 0
-SIGIL = options.sigil
 FRAME_LENGTH = options.frame_length
 DATASIZE = options.datasize
 
@@ -40,38 +38,16 @@ def make_buffer_from_bit_pattern(pattern):
         last_bit = bit
     return quietnet.pack_buffer(output_buffer)
 
-def repeat_buffer(buffer):
-    while True:
-        for sample in buffer:
-            stream.write(sample)
+def play_buffer(buffer):
+    for sample in buffer:
+        stream.write(sample)
 
-def play_tone():
-    buffer = quietnet.pack_buffer(quietnet.tone(FREQ, DATASIZE))
-    repeat_buffer(buffer)
-
-def fill(letter):
-    n = ord(letter)
-    b = str(bin(n))[2:]
-    return b.zfill(8)
-
-def make_bit_pattern_from_string(string, prefix):
-    pattern = prefix
-    for l in string:
-        pattern += fill(l)
-    return pattern
-
-if len(sys.argv) > 1:
-    pattern = sys.argv[1]
-else:
-    print "enter a string to repeat:",
-    pattern = make_bit_pattern_from_string(raw_input(), SIGIL)
-
-print "repeating %s" % pattern
 print "Use ctrl-c to exit"
-buffer = make_buffer_from_bit_pattern(pattern)
-
-# keep playing the buffer until the program is terminated
-repeat_buffer(buffer)
+while True:
+    print ">",
+    pattern = psk.encode(raw_input())
+    buffer = make_buffer_from_bit_pattern(pattern)
+    play_buffer(buffer)
 
 # never actually reached, right now you exit with ctrl-c
 stream.stop_stream()
