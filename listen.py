@@ -6,11 +6,7 @@ import quietnet
 import options
 import numpy as np
 import sys
-
 import psk
-import options
-
-import wave
 
 FORMAT = pyaudio.paInt16
 frame_length = options.frame_length
@@ -50,7 +46,7 @@ def process_points():
                 cur_points.append(points.get(False))
             except Queue.Empty:
                 time.sleep(wait_for_point_timeout)
-    
+
         while True:
             while np.average(cur_points) > bottom_threshold:
                 try:
@@ -70,7 +66,7 @@ def process_points():
                 cur_points = [cur_points[-1]]
                 break
         print ''
-    
+
         last_bits = []
         while True:
             if len(cur_points) == frame_length:
@@ -118,13 +114,12 @@ def callback(in_data, frame_count, time_info, status):
 
 def start_analysing_stream():
     p = pyaudio.PyAudio()
-    stream = p.open(format=FORMAT, channels=options.channels, rate=options.rate, input=True, frames_per_buffer=frames_per_buffer, stream_callback=callback)
+    stream = p.open(format=FORMAT, channels=options.channels, rate=options.rate,
+        input=True, frames_per_buffer=frames_per_buffer, stream_callback=callback)
     stream.start_stream()
-    
     while stream.is_active():
         time.sleep(wait_for_sample_timeout)
 
 sys.stdout.write("Quietnet listening at %sHz" % search_freq)
 sys.stdout.flush()
 start_analysing_stream()
-
