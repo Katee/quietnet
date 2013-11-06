@@ -39,28 +39,28 @@ def raw_has_freq(buffer, freq_in_hertz, rate, chunk):
 def get_freq_over_time(ffts, search_freq, chunk=1024, rate=44100):
     return [has_freq(fft, search_freq, rate, chunk) for fft in ffts]
 
-def get_points(freq_values, threshold=None):
+def get_points(freq_samples, frame_length, threshold=None, last_point=0):
     if threshold == None:
-        max = np.max(freq_values)
-        threshold = (np.max(freq_values) + np.min(freq_values)) / 2
+        threshold = np.median(freq_samples)
     points = []
-    for point in freq_values:
-        if point < threshold:
-            points.append(0)
-        else:
-            points.append(1)
-
-    # TODO is this a hack for framing?
-    i = 0
-    while i < len(points):
-        if points[i] != points[i+1]:
-            points = points[i:]
-            break
-        i += 1
+    for i in range(len(freq_samples)):
+        freq_value = freq_samples[i]
+        point = 0
+        if freq_value > threshold:
+            # ignore big changes in frequency when they aren't near the frame transition
+            if last_point == 1 or (i % frame_length) <= 2:
+                point = 1
+            else:
+                point = 0
+        points.append(point)
+        last_point = point
     return points
 
 def get_bits(points, frame_length):
     return [int(round(sum(c) / float(frame_length))) for c in list(chunks(points, frame_length)) if len(c) == frame_length]
+
+def get_bit(points, frame_length):
+    return int(round(sum(points) / float(frame_length)))
 
 def get_bytes(bits, sigil):
     i = 0
@@ -71,6 +71,10 @@ def get_bytes(bits, sigil):
             break
         i += 1
     return [l for l in list(chunks(bits[i:], 8)) if len(l) == 8]
+
+def decode_byte(l):
+    byte_string = ''.join([str(bit) for bit in l])
+    return chr(int(byte_string, base=2))
 
 def decode(bytes):
     string = ""
