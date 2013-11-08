@@ -3,7 +3,10 @@ import pyaudio
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 
-def capture_buffers(num_buffers, chunk, rate, skip=1024):
+def capture_buffers(num_buffers, chunk, rate, skip=None):
+    if skip == None:
+        skip = rate / 2
+
     p = pyaudio.PyAudio()
     stream = p.open(format=FORMAT, channels=CHANNELS, rate=rate, input=True, frames_per_buffer=chunk)
     

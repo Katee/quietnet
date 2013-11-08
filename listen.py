@@ -2,9 +2,9 @@ import Queue
 import threading
 import time
 import pyaudio
+import numpy as np
 import quietnet
 import options
-import numpy as np
 import sys
 import psk
 
@@ -17,7 +17,9 @@ sigil = [int(x) for x in options.sigil]
 frames_per_buffer = chunk * 10
 
 in_length = 4000
+# raw audio frames
 in_frames = Queue.Queue(in_length)
+# the value of the fft at the frequency we care about
 points = Queue.Queue(in_length)
 bits = Queue.Queue(in_length / frame_length)
 
@@ -26,7 +28,8 @@ wait_for_frames_timeout = 0.1
 wait_for_point_timeout = 0.1
 wait_for_byte_timeout = 0.1
 
-bottom_threshold = 5000
+# yeeeep this is just hard coded
+bottom_threshold = 8000
 
 def process_frames():
     while True:

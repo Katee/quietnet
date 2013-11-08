@@ -46,7 +46,7 @@ def play_buffer(buffer):
         stream.write(sample)
 
 if __name__ == "__main__":
-    print "Use ctrl-c to exit"
+    print "Welcome to quietnet. Use ctrl-c to exit"
 
     try:
         # get user input and play message
