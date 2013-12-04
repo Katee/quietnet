@@ -2,6 +2,7 @@ import numpy as np
 import struct
 import math
 
+# split something into chunks
 def chunks(l, n):
     for i in xrange(0, len(l), n):
         yield l[i:i+n]
@@ -90,34 +91,23 @@ def tone(freq=400, datasize=4096, rate=44100, amp=8000.0):
         sine_list.append(int(samp*amp/2))
     return sine_list
 
-def envelope(in_data, rate=44100):
-    freq = math.pi / len(in_data)
-    amp=8000.0
-    sine_list=[]
-    for x in range(len(in_data)):
-        samp = math.sin(freq*x) * in_data[x]
-        sine_list.append(int(samp))
-    return sine_list
-
-def lenvelope(in_data, rate=44100):
+def envelope(in_data, left=True, right=True, rate=44100):
     half = float(len(in_data)) / 2
     freq = math.pi / len(in_data)
-    out_data=[]
+    out_data = []
+
     for x in range(len(in_data)):
         samp = in_data[x]
         if x < half:
             samp = samp * math.sin(freq*x)
-        out_data.append(int(samp))
-    return out_data
-
-def renvelope(in_data, rate=44100):
-    half = int(float(len(in_data)) / 2)
-    freq = math.pi / len(in_data)
-    out_data=[]
-    for x in range(len(in_data)):
-        samp = in_data[x]
         if x > half:
             samp = samp * math.sin(freq*x)
         out_data.append(int(samp))
+
     return out_data
 
+def lenvelope(in_data, rate=44100):
+    return envelope(in_data, left=True, right=False, rate=rate)
+
+def renvelope(in_data, rate=44100):
+    return envelope(in_data, left=False, right=True, rate=rate)
