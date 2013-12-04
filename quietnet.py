@@ -83,8 +83,7 @@ def decode(bytes):
         string += chr(int(byte, base=2))
     return string
 
-def tone(freq=400, datasize=4096, rate=44100):
-    amp=8000.0
+def tone(freq=400, datasize=4096, rate=44100, amp=8000.0):
     sine_list=[]
     for x in range(datasize):
         samp = math.sin(2*math.pi*freq*(x/float(rate)))
