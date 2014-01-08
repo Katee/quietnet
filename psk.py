@@ -103,7 +103,8 @@ for k, v in psk.items():
 def encode(string):
     result = []
     for c in string:
-       result.append(psk[c] )
+        if c in psk:
+            result.append(psk[c])
     return '00'.join(result) + '00'
 
 def decode(string):
