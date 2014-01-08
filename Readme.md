@@ -12,4 +12,4 @@ Warning: May annoy some animals.
 
 ## Installation
 
-Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) and [http://www.numpy.org/](NumPy).
+Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) and [Numpy](http://www.numpy.org/).
