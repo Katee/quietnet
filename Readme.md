@@ -9,3 +9,7 @@ Note: If you can clearly hear the send script working than your speakers may not
 run `python send.py` in one terminal window and `python listen.py` in another. Text you input into the send.py window should appear (after a delay) in the listen.py window.
 
 Warning: May annoy some animals.
+
+## Installation
+
+Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) and [http://www.numpy.org/](NumPy).
