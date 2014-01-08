@@ -2,7 +2,7 @@
 
 Simple chat program using near ultrasonic frequencies. Works without Wifi or Bluetooth and won't show up in a pcap.
 
-Note: If you can clearly hear the send script working than your speakers may not be high quality enough to produce sounds in the near ultrasonic range.
+Note: If you can clearly hear the send script working then your speakers may not be high quality enough to produce sounds in the near ultrasonic range.
 
 ## Usage
 
