@@ -10,6 +10,8 @@ run `python send.py` in one terminal window and `python listen.py` in another. T
 
 Warning: May annoy some animals.
 
+![Screenshot](https://raw.github.com/Katee/quietnet/master/screenshot.png)
+
 ## Installation
 
 Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) and [Numpy](http://www.numpy.org/).
