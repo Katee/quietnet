@@ -46,13 +46,12 @@ def play_buffer(buffer):
         stream.write(sample)
 
 if __name__ == "__main__":
-    print "Welcome to quietnet. Use ctrl-c to exit"
+    print("Welcome to quietnet. Use ctrl-c to exit")
 
     try:
         # get user input and play message
         while True:
-            print ">",
-            message = raw_input()
+            message = raw_input("> ")
             pattern = psk.encode(message)
             buffer = make_buffer_from_bit_pattern(pattern, FREQ, FREQ_OFF)
             play_buffer(buffer)
@@ -61,4 +60,4 @@ if __name__ == "__main__":
         stream.stop_stream()
         stream.close()
         p.terminate()
-        print "exited cleanly"
+        print("exited cleanly")
