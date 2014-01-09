@@ -52,9 +52,12 @@ if __name__ == "__main__":
         # get user input and play message
         while True:
             message = raw_input("> ")
-            pattern = psk.encode(message)
-            buffer = make_buffer_from_bit_pattern(pattern, FREQ, FREQ_OFF)
-            play_buffer(buffer)
+            try:
+              pattern = psk.encode(message)
+              buffer = make_buffer_from_bit_pattern(pattern, FREQ, FREQ_OFF)
+              play_buffer(buffer)
+            except KeyError:
+              print("Messages may only contain printable ASCII characters.")
     except KeyboardInterrupt:
         # clean up our streams and exit
         stream.stop_stream()
