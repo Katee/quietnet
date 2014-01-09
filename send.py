@@ -42,8 +42,8 @@ def make_buffer_from_bit_pattern(pattern, on_freq, off_freq):
     return quietnet.pack_buffer(output_buffer)
 
 def play_buffer(buffer):
-    for sample in buffer:
-        stream.write(sample)
+    output = ''.join(buffer)
+    stream.write(output)
 
 if __name__ == "__main__":
     print("Welcome to quietnet. Use ctrl-c to exit")
