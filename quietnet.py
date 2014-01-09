@@ -84,30 +84,22 @@ def decode(bytes):
         string += chr(int(byte, base=2))
     return string
 
-def tone(freq=400, datasize=4096, rate=44100, amp=8000.0):
+def tone(freq=400, datasize=4096, rate=44100, amp=12000.0, offset=0):
     sine_list=[]
     for x in range(datasize):
-        samp = math.sin(2*math.pi*freq*(x/float(rate)))
-        sine_list.append(int(samp*amp/2))
+        samp = math.sin(2*math.pi*freq*((x + offset)/float(rate)))
+        sine_list.append(int(samp*amp))
     return sine_list
 
 def envelope(in_data, left=True, right=True, rate=44100):
     half = float(len(in_data)) / 2
-    freq = math.pi / len(in_data)
+    freq = math.pi / (len(in_data) / 2)
     out_data = []
 
     for x in range(len(in_data)):
         samp = in_data[x]
-        if x < half:
-            samp = samp * math.sin(freq*x)
-        if x > half:
-            samp = samp * math.sin(freq*x)
+        if (x < half and left) or (right and x >= half):
+            samp = samp * (1 + math.sin(freq*x - (math.pi / 2))) / 2
         out_data.append(int(samp))
 
     return out_data
-
-def lenvelope(in_data, rate=44100):
-    return envelope(in_data, left=True, right=False, rate=rate)
-
-def renvelope(in_data, rate=44100):
-    return envelope(in_data, left=False, right=True, rate=rate)
