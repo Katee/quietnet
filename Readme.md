@@ -8,7 +8,7 @@ Note: If you can clearly hear the send script working then your speakers may not
 
 run `python send.py` in one terminal window and `python listen.py` in another. Text you input into the send.py window should appear (after a delay) in the listen.py window.
 
-Warning: May annoy some animals.
+**Warning:** May annoy some animals and humans.
 
 ![Screenshot](https://raw.github.com/Katee/quietnet/master/screenshot.png)
 
