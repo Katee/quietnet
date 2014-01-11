@@ -22,12 +22,27 @@ def fft(signal):
 def get_peak(hertz, rate, chunk):
     return int(round((float(hertz) / rate) * chunk))
 
+def weighted_values_around_peak(in_data, peak_index, offset):
+    period = math.pi / (offset * 2)
+
+    out_data = []
+    for i in range(len(in_data)):
+        if i >= peak_index - offset and i <= peak_index + offset:
+            out_data.append(in_data[i] * np.abs(math.sin((period * (i - peak_index + offset)) + (math.pi / 2.0))))
+        else:
+            out_data.append(0)
+    return out_data
+
 def has_freq(fft_sample, freq_in_hertz, rate, chunk, offset=3):
-    peak = get_peak(freq_in_hertz, rate, chunk)
-    top = max(fft_sample[peak-1:peak+2])
-    if top < np.average([fft_sample[peak-offset], fft_sample[peak+offset]]):
+    peak_index = get_peak(freq_in_hertz, rate, chunk)
+    top = max(fft_sample[peak_index-1:peak_index+2])
+
+    avg_around_peak = np.average(weighted_values_around_peak(fft_sample, peak_index, offset))
+
+    if top > avg_around_peak:
+        return fft_sample[peak_index]
+    else:
         return 0
-    return fft_sample[peak]
 
 def get_signal(buffer):
     unpacked_buffer = unpack_buffer(list(chunks(buffer, 2)))
