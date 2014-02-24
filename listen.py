@@ -68,7 +68,7 @@ def process_points():
                 bits.put(0)
                 cur_points = [cur_points[-1]]
                 break
-        print ''
+        print("")
 
         last_bits = []
         while True:
