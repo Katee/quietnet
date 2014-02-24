@@ -48,7 +48,7 @@ if __name__ == "__main__":
     try:
         # get user input and play message
         while True:
-            message = raw_input("> ")
+            message = input("> ")
             try:
               pattern = psk.encode(message)
               buffer = make_buffer_from_bit_pattern(pattern, FREQ, FREQ_OFF)

@@ -2,6 +2,10 @@ import numpy as np
 import struct
 import math
 
+# let us use input in python 2.x.
+try: input = raw_input
+except NameError: pass
+
 # split something into chunks
 def chunks(l, n):
     for i in xrange(0, len(l), n):
