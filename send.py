@@ -1,3 +1,4 @@
+import sys
 import pyaudio
 import quietnet
 import options
@@ -13,6 +14,9 @@ DATASIZE = options.datasize
 
 p = pyaudio.PyAudio()
 stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True)
+
+user_input = input if sys.version_info.major >= 3 else raw_input
+
 
 def make_buffer_from_bit_pattern(pattern, on_freq, off_freq):
     """ Takes a pattern and returns an audio buffer that encodes that pattern """
@@ -48,7 +52,7 @@ if __name__ == "__main__":
     try:
         # get user input and play message
         while True:
-            message = input("> ")
+            message = user_input("> ")
             try:
               pattern = psk.encode(message)
               buffer = make_buffer_from_bit_pattern(pattern, FREQ, FREQ_OFF)
