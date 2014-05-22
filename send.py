@@ -17,7 +17,6 @@ stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True)
 
 user_input = input if sys.version_info.major >= 3 else raw_input
 
-
 def make_buffer_from_bit_pattern(pattern, on_freq, off_freq):
     """ Takes a pattern and returns an audio buffer that encodes that pattern """
     # the key's middle value is the bit's value and the left and right bits are the bits before and after
