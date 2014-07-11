@@ -15,3 +15,7 @@ run `python send.py` in one terminal window and `python listen.py` in another. T
 ## Installation
 
 Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) and [Numpy](http://www.numpy.org/).
+
+## Better Projects
+
+Quietnet is just a toy! Take a look at [minimodem](http://www.whence.com/minimodem/) or [gnuradio](http://gnuradio.org/) if you need something robust.
