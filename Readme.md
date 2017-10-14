@@ -18,4 +18,7 @@ Quietnet is dependant on [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/) 
 
 ## Better Projects
 
-Quietnet is just a toy! Take a look at [minimodem](http://www.whence.com/minimodem/) or [gnuradio](http://gnuradio.org/) if you need something robust.
+Quietnet is just a toy! Here are some more robust and polished projects to look at:
+* [quiet-js](https://quiet.github.io/quiet-js/) (works in the browser!)
+* [minimodem](http://www.whence.com/minimodem/)
+* [gnuradio](http://gnuradio.org/)
